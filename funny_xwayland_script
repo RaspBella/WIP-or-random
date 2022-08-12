@@ -1,0 +1,27 @@
+#!/bin/bash
+while getopts ':d:w:' x
+do
+    case $x in
+        d) display=$OPTARG ;;
+        w) window_manager=$OPTARG ;;
+        \?)
+            echo "Invalid option: -$OPTARG" >&2
+            exit 1
+            ;;
+        :)
+            echo "Option -$OPTARG requires an argument." >&2
+            exit 1
+            ;;
+    esac
+done
+
+run(){
+    Xwayland :$display &
+    DISPLAY=:$display $window_manager &
+}
+
+if [ ! -z $display ] && [ ! -z $window_manager ]; then
+    run
+else
+    exit "Required options: d(A number), w(A window manager)"
+fi

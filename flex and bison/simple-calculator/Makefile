@@ -1,7 +1,7 @@
-simple-calculator:	simple-calculator.l simple-calculator.y
+default:
 	bison -d simple-calculator.y
-	flex simple-calculator.l
-	cc -o $@ simple-calculator.tab.c lex.yy.c -lfl
+	flex -o simple-calculator.yy.c simple-calculator.l
+	cc -o simple-calculator simple-calculator.tab.c simple-calculator.yy.c -lfl
 
 clean:
-	rm *tab* lex.yy.c
+	rm simple-calculator{,.yy.c,.tab.?}
